@@ -1,0 +1,64 @@
+#ifndef NEXUS_BUILD_CONFIG_H
+#define NEXUS_BUILD_CONFIG_H
+
+/* --- Snapshot from CMake at configure time (numeric 1/0) --- */
+#define NEXUS_CFG_CMAKE_DOUBLE_PRECISION         @NEXUS_DOUBLE_PRECISION_NUM@
+#define NEXUS_CFG_CMAKE_MEMORY_DEBUG             @NEXUS_MEMORY_DEBUG_NUM@
+#define NEXUS_CFG_CMAKE_OVERRIDE_ALLOC           @NEXUS_OVERRIDE_STDLIB_ALLOC_NUM@
+#define NEXUS_CFG_CMAKE_EXIT_CRASH               @NEXUS_EXIT_CRASH_NUM@
+#define NEXUS_CFG_CMAKE_OVERRIDE_EXIT            @NEXUS_OVERRIDE_STDLIB_EXIT_NUM@
+#define NEXUS_CFG_CMAKE_LEGACY_ALIASES           @NEXUS_ENABLE_LEGACY_SHORT_ALIASES_NUM@
+
+/* Empty on multi-config generators (use NEXUS_CFG_PP_BUILD_CONFIG instead) */
+#define NEXUS_CFG_CMAKE_BUILD_TYPE               "@CMAKE_BUILD_TYPE@"
+
+/* Project version snapshot */
+#define NEXUS_CFG_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
+#define NEXUS_CFG_VERSION_MINOR @PROJECT_VERSION_MINOR@
+#define NEXUS_CFG_VERSION_PATCH @PROJECT_VERSION_PATCH@
+
+/* --- Preprocessor view (reflects per-config compile defs) --- */
+#ifdef NEXUS_DOUBLE_PRECISION
+#  define NEXUS_CFG_PP_DOUBLE_PRECISION 1
+#else
+#  define NEXUS_CFG_PP_DOUBLE_PRECISION 0
+#endif
+
+#ifdef NEXUS_MEMORY_DEBUG
+#  define NEXUS_CFG_PP_MEMORY_DEBUG 1
+#else
+#  define NEXUS_CFG_PP_MEMORY_DEBUG 0
+#endif
+
+#ifdef NEXUS_OVERRIDE_STDLIB_ALLOC
+#  define NEXUS_CFG_PP_OVERRIDE_ALLOC 1
+#else
+#  define NEXUS_CFG_PP_OVERRIDE_ALLOC 0
+#endif
+
+#ifdef NEXUS_EXIT_CRASH
+#  define NEXUS_CFG_PP_EXIT_CRASH 1
+#else
+#  define NEXUS_CFG_PP_EXIT_CRASH 0
+#endif
+
+#ifdef NEXUS_OVERRIDE_STDLIB_EXIT
+#  define NEXUS_CFG_PP_OVERRIDE_EXIT 1
+#else
+#  define NEXUS_CFG_PP_OVERRIDE_EXIT 0
+#endif
+
+#ifdef NEXUS_ENABLE_LEGACY_SHORT_ALIASES
+#  define NEXUS_CFG_PP_LEGACY_ALIASES 1
+#else
+#  define NEXUS_CFG_PP_LEGACY_ALIASES 0
+#endif
+
+/* Optional: current build config as a string (set via target_compile_definitions):
+   target_compile_definitions(nexus PUBLIC NEXUS_CFG_PP_BUILD_CONFIG="$<CONFIG>")
+*/
+#ifndef NEXUS_CFG_PP_BUILD_CONFIG
+#  define NEXUS_CFG_PP_BUILD_CONFIG ""
+#endif
+
+#endif /* NEXUS_BUILD_CONFIG_H */
