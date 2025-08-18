@@ -133,10 +133,12 @@ void exit_crash(unsigned code);
 #endif
 
 /* ===== Public API surface ===== */
-/* Example function to keep linkage tests simple; implement in your .c */
-NEXUS_API int         nexus_add(int a, int b);
 /* Returns a static buffer or constant string describing MAJOR.MINOR.PATCH */
 NEXUS_API const char* nexus_version_string(void);
+
+nexus_u32 nexus_randomness_integer_random(nexus_u32 seed);
+
+nexus_u32 nexus_randomness_seed_per_run(const void *token);
 
 NEXUS_EXTERN_C_END
 #endif /* NEXUS_H */

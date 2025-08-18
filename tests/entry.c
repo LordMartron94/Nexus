@@ -66,10 +66,6 @@ static void show_configuration(void) {
 static int run_basic_api_tests(void) {
     int ok = 1;
 
-    if (nexus_add(2, 3) != 5) {
-        fprintf(stderr, "add(2,3) != 5\n");
-        ok = 0;
-    }
     if (nexus_version_string() == NULL) {
         fprintf(stderr, "version_string() returned NULL\n");
         ok = 0;
