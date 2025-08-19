@@ -66,6 +66,8 @@ typedef unsigned char NEXUS_BOOL;
   #endif
 #endif
 
+#define NEXUS_STRING_TERMINATOR '\0'
+
 /* Optional legacy aliases (opt-in) */
 #ifdef NEXUS_ENABLE_LEGACY_SHORT_ALIASES
   typedef nexus_u32 uint;
@@ -142,6 +144,8 @@ NEXUS_API const char* nexus_version_string(void);
 nexus_u32 nexus_randomness_integer_random(nexus_u32 seed);
 
 nexus_u32 nexus_randomness_seed_per_run(const void *token);
+
+char *nexus_string_duplicate(const char* sourceString);
 
 NEXUS_EXTERN_C_END
 #endif /* NEXUS_H */
