@@ -43,6 +43,9 @@ typedef unsigned char NEXUS_BOOL;
 #ifndef NEXUS_FALSE
 #  define NEXUS_FALSE ((NEXUS_BOOL)0)
 #endif
+#ifndef NEXUS_UNKNOWN
+# define  NEXUS_UNKNOWN ((NEXUS_BOOL)-1)
+#endif
 
 /* ===== Sized integers (prefer stdint when available) ===== */
 #if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)
