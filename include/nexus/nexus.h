@@ -44,7 +44,7 @@ typedef unsigned char NEXUS_BOOL;
 #  define NEXUS_FALSE ((NEXUS_BOOL)0)
 #endif
 #ifndef NEXUS_UNKNOWN
-# define  NEXUS_UNKNOWN ((NEXUS_BOOL)-1)
+# define  NEXUS_UNKNOWN ((NEXUS_BOOL)255)
 #endif
 
 /* ===== Sized integers (prefer stdint when available) ===== */
