@@ -143,11 +143,11 @@ void exit_crash(unsigned code);
 NEXUS_API const char* nexus_version_string(void);
 
 nexus_u32 nexus_randomness_integer_random(nexus_u32 seed);
-
 nexus_u32 nexus_randomness_seed_per_run(const void *token);
 
 char *nexus_string_duplicate(const char* sourceString);
 void nexus_string_message_copy(char* messageBuffer, size_t messageBufferSize, const char* message);
+void nexus_string_message_format_copy(char *buffer, size_t bufferSize, const char *format, ...);
 
 void nexus_file_read_at(
     const char *filePath,

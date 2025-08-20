@@ -1,6 +1,8 @@
 /* Created by LordMartron on 20/08/2025. */
 
 #include <nexus/nexus.h>
+#include <stdarg.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 void nexus_string_message_copy(char* messageBuffer, const size_t messageBufferSize, const char* message) {
@@ -11,6 +13,19 @@ void nexus_string_message_copy(char* messageBuffer, const size_t messageBufferSi
     ++i;
   }
   messageBuffer[i] = '\0';
+}
+
+void nexus_string_message_format_copy(char *buffer, const size_t bufferSize, const char *format, ...)
+{
+  if (!buffer || bufferSize == 0) return;
+  va_list ap;
+  va_start(ap, format);
+#if defined(_MSC_VER) && !defined(__clang__) && _MSC_VER < 1900
+  _vsnprintf_s(buffer, bufferSize, _TRUNCATE, format, ap);  /* old MSVC */
+#else
+  vsnprintf(buffer, bufferSize, format, ap);                /* C99+ */
+#endif
+  va_end(ap);
 }
 
 char *nexus_string_duplicate(const char* sourceString) {
