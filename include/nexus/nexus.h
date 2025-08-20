@@ -157,5 +157,9 @@ void nexus_file_read_at(
     char *errorBuffer, nexus_u16 errorBufferSize
 );
 
+double nexus_bytes_byte_to_kilobytes_convert(nexus_u64 bytes);
+double nexus_bytes_byte_to_kilobits_convert(nexus_u64 bytes);
+
+
 NEXUS_EXTERN_C_END
 #endif /* NEXUS_H */
