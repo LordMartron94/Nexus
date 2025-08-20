@@ -67,6 +67,7 @@ typedef unsigned char NEXUS_BOOL;
 #endif
 
 #define NEXUS_STRING_TERMINATOR '\0'
+#define NEXUS_ERROR_MESSAGE_MAX 128
 
 /* Optional legacy aliases (opt-in) */
 #ifdef NEXUS_ENABLE_LEGACY_SHORT_ALIASES
@@ -146,6 +147,15 @@ nexus_u32 nexus_randomness_integer_random(nexus_u32 seed);
 nexus_u32 nexus_randomness_seed_per_run(const void *token);
 
 char *nexus_string_duplicate(const char* sourceString);
+void nexus_string_message_copy(char* messageBuffer, size_t messageBufferSize, const char* message);
+
+void nexus_file_read_at(
+    const char *filePath,
+    nexus_i64 offset, nexus_i32 origin,
+    void *readBuffer, size_t readBufferSize,
+    size_t *outNumberBytesRead,
+    char *errorBuffer, nexus_u16 errorBufferSize
+);
 
 NEXUS_EXTERN_C_END
 #endif /* NEXUS_H */
