@@ -5,6 +5,7 @@
 /* ===== Standard headers ===== */
 #include <stddef.h>  /* size_t, NULL */
 #include <stdlib.h>  /* malloc, realloc, free, exit */
+#include <stdio.h>
 
 /* ===== C++ interop ===== */
 #ifdef __cplusplus
@@ -101,6 +102,15 @@ typedef unsigned char NEXUS_BOOL;
 
 NEXUS_EXTERN_C_BEGIN
 
+#ifndef NEXUS_U64_FMT
+#  if defined(_MSC_VER) && _MSC_VER < 1900
+#    define NEXUS_U64_FMT "%I64u"
+#  else
+#    define NEXUS_U64_FMT "%llu"
+#  endif
+#endif
+#define NEXUS_U64_CAST(x) ((unsigned long long)(x))
+
 /* ===== Debug memory API (opt-in) ===== */
 #ifdef NEXUS_MEMORY_DEBUG
 void      nexus_debug_memory_init(void (*lock)(void*), void (*unlock)(void*), void *mutex);
@@ -145,21 +155,38 @@ NEXUS_API const char* nexus_version_string(void);
 nexus_u32 nexus_randomness_integer_random(nexus_u32 seed);
 nexus_u32 nexus_randomness_seed_per_run(const void *token);
 
-char *nexus_string_duplicate(const char* sourceString);
-void nexus_string_message_copy(char* messageBuffer, size_t messageBufferSize, const char* message);
+char *nexus_string_duplicate(const char *sourceString);
+void nexus_string_message_copy(char *messageBuffer, size_t messageBufferSize, const char *message);
 void nexus_string_message_format_copy(char *buffer, size_t bufferSize, const char *format, ...);
+void nexus_string_buffer_reset(char *buffer, size_t bufferSize);
 
-void nexus_file_read_at(
-    const char *filePath,
-    nexus_i64 offset, nexus_i32 origin,
-    void *readBuffer, size_t readBufferSize,
-    size_t *outNumberBytesRead,
-    char *errorBuffer, nexus_u16 errorBufferSize
-);
+typedef struct NEXUS_FILE_INFORMATION *NEXUS_FILE_INFORMATION_HANDLE;
+
+NEXUS_BOOL nexus_file_information_open(const char *filePath, NEXUS_FILE_INFORMATION_HANDLE *outHandle, char *errorBuffer, nexus_u64 errorBufferSize); /* Open/close an input file as a logical cursor. */
+void       nexus_file_information_close(NEXUS_FILE_INFORMATION_HANDLE handle);
+NEXUS_BOOL nexus_file_scan(NEXUS_FILE_INFORMATION_HANDLE handle, nexus_u64 byteAmount, void *destination, nexus_u64 destinationSize, nexus_u64 *outBytesRead, char *errorBuffer, nexus_u64 errorBufferSize); /* Non-advancing read (peek) from the current logical index. */
+NEXUS_BOOL nexus_file_consume(NEXUS_FILE_INFORMATION_HANDLE handle, nexus_u64 byteAmount, void *destination, nexus_u64 destinationSize, nexus_u64 *outBytesRead, char *errorBuffer, nexus_u64 errorBufferSize); /* Advancing read (consume) from the current logical index. */
+NEXUS_BOOL nexus_file_scan_at(const char* filePath, nexus_i64 offset, void* dst, size_t n, char* errorBuffer, size_t errorBufferSize); /* Convenience: read exactly n bytes at absolute offset without exposing internals. */
 
 double nexus_bytes_byte_to_kilobytes_convert(nexus_u64 bytes);
 double nexus_bytes_byte_to_kilobits_convert(nexus_u64 bytes);
+void nexus_bytes_byte_array_hex_print(const unsigned char *byteArray, nexus_u64 arraySize, FILE *out);
 
+nexus_u8 nexus_bits_bit_in_byte_lsb_get(unsigned char byte, nexus_u8 bitIndex);
+nexus_u8 nexus_bits_bit_in_byte_msb_get(unsigned char byte, nexus_u8 bitIndex);
+
+nexus_u8 nexus_validation_crc8_update(nexus_u8 crc, nexus_u8 byte);
+
+typedef enum {
+  NEXUS_OK = 0,
+  NEXUS_INVALID_ARGUMENT = 1,
+  NEXUS_FUNCTION_ERROR = 2,
+  NEXUS_UNKNOWN_ERROR = 255
+} NEXUS_ERROR_CODE;
+
+void             nexus_errors_ok(char* errorBuffer, nexus_u64 errorBufferSize);
+NEXUS_ERROR_CODE nexus_errors_invalid_argument(char* errorBuffer, nexus_u64 errorBufferSize);
+NEXUS_ERROR_CODE nexus_errors_out_of_memory(char* errorBuffer, nexus_u64 errorBufferSize);
 
 NEXUS_EXTERN_C_END
 #endif /* NEXUS_H */

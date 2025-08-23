@@ -46,3 +46,7 @@ char *nexus_string_duplicate(const char* sourceString) {
   }
   return duplicate;
 }
+
+void nexus_string_buffer_reset(char *buffer, const size_t bufferSize) {
+  if (buffer && bufferSize) buffer[0] = NEXUS_STRING_TERMINATOR;
+}

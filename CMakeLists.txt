@@ -103,7 +103,18 @@ target_include_directories(nexus
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/generated>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+        PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/internal
 )
+
+# ---- Attach private/internal headers so IDEs/analysis see them ----
+file(GLOB_RECURSE NEXUS_PRIVATE_HEADERS CONFIGURE_DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/internal/*.h"
+)
+
+if(NEXUS_PRIVATE_HEADERS AND TARGET nexus)
+  target_sources(nexus PRIVATE ${NEXUS_PRIVATE_HEADERS})
+endif()
 
 # Version/config macros (always after add_library)
 target_compile_definitions(nexus PUBLIC
