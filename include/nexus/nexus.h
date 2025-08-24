@@ -175,7 +175,8 @@ nexus_u64  nexus_file_reader_index_get(NEXUS_FILE_INFORMATION_CHANDLE handle);
 
 double nexus_bytes_byte_to_kilobytes_convert(nexus_u64 bytes);
 double nexus_bytes_byte_to_kilobits_convert(nexus_u64 bytes);
-void nexus_bytes_byte_array_hex_print(const unsigned char *byteArray, nexus_u64 arraySize, FILE *out);
+void   nexus_bytes_byte_array_hex_file_print(const unsigned char *byteArray, nexus_u64 arraySize, FILE *out);
+void   nexus_bytes_byte_array_print(const unsigned char *byteArray, nexus_u64 arraySize);
 
 nexus_u8 nexus_bits_bit_in_byte_lsb_get(unsigned char byte, nexus_u8 bitIndex);
 nexus_u8 nexus_bits_bit_in_byte_msb_get(unsigned char byte, nexus_u8 bitIndex);

@@ -11,8 +11,20 @@ double nexus_bytes_byte_to_kilobits_convert(const nexus_u64 bytes) {
   return (double)bytes / 1000.0;
 }
 
-void nexus_bytes_byte_array_hex_print(const unsigned char *byteArray, const nexus_u64 arraySize, FILE *out) {
-  for (nexus_u64 i = 0; i < arraySize; ++i) {
+void nexus_bytes_byte_array_hex_file_print(const unsigned char *byteArray, const nexus_u64 arraySize, FILE *out) {
+  for (nexus_u64 i = 0; i < arraySize; i++) {
     fprintf(out, "%02x", (unsigned)byteArray[i]);
   }
+}
+
+void nexus_bytes_byte_array_print(const unsigned char *byteArray, const nexus_u64 arraySize) {
+  for (nexus_u64 i = 0; i < arraySize; i++) {
+    if (i == arraySize - 1) {
+      printf("%d", byteArray[i]);
+      continue;
+    }
+
+    printf("%d-", byteArray[i]);
+  }
+  printf("\n");
 }
