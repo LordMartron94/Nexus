@@ -113,12 +113,12 @@ NEXUS_EXTERN_C_BEGIN
 
 /* ===== Debug memory API (opt-in) ===== */
 #ifdef NEXUS_MEMORY_DEBUG
-void      nexus_debug_memory_init(void (*lock)(void*), void (*unlock)(void*), void *mutex);
-void     *nexus_debug_mem_malloc(size_t size, const char *file, unsigned line);
-void     *nexus_debug_mem_realloc(void *ptr, size_t size, const char *file, unsigned line);
-void      nexus_debug_mem_free(void *ptr);
-void      nexus_debug_mem_print(unsigned min_allocs);
-void      nexus_debug_mem_reset(void);
+void       nexus_debug_memory_init(void (*lock)(void*), void (*unlock)(void*), void *mutex);
+void      *nexus_debug_mem_malloc(size_t size, const char *file, unsigned line);
+void      *nexus_debug_mem_realloc(void *ptr, size_t size, const char *file, unsigned line);
+void       nexus_debug_mem_free(void *ptr);
+void       nexus_debug_mem_print(unsigned min_allocs);
+void       nexus_debug_mem_reset(void);
 NEXUS_BOOL nexus_debug_memory(void); /* NEXUS_TRUE if any guard error found */
 
 #  define NEXUS_ALLOC(n)      nexus_debug_mem_malloc((n), __FILE__, __LINE__)

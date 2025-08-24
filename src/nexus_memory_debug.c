@@ -171,7 +171,7 @@ static NEXUS_BOOL nexus__site_remove(void *ptr, size_t *out_size)
 }
 
 /* ------------------------------------------------------------------ */
-/* Public API (matches nexus.h)                                        */
+/* Public API                                    */
 /* ------------------------------------------------------------------ */
 
 void nexus_debug_memory_init(void (*lock)(void *mutex),
