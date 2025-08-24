@@ -193,6 +193,7 @@ typedef enum {
 void             nexus_errors_ok(char* errorBuffer, nexus_u64 errorBufferSize);
 NEXUS_ERROR_CODE nexus_errors_invalid_argument(char* errorBuffer, nexus_u64 errorBufferSize);
 NEXUS_ERROR_CODE nexus_errors_out_of_memory(char* errorBuffer, nexus_u64 errorBufferSize);
+void             nexus_errors_error_number_format(char *errorBuffer, nexus_u64 errorBufferSize, const char *fallback, int errorNumber);
 
 NEXUS_EXTERN_C_END
 #endif /* NEXUS_H */
