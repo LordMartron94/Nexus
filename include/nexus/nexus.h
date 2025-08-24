@@ -160,13 +160,18 @@ void nexus_string_message_copy(char *messageBuffer, size_t messageBufferSize, co
 void nexus_string_message_format_copy(char *buffer, size_t bufferSize, const char *format, ...);
 void nexus_string_buffer_reset(char *buffer, size_t bufferSize);
 
-typedef struct NEXUS_FILE_INFORMATION *NEXUS_FILE_INFORMATION_HANDLE;
+/* Opaque, forward-declared type */
+typedef struct NEXUS_FILE_INFORMATION NEXUS_FILE_INFORMATION;
 
-NEXUS_BOOL nexus_file_information_open(const char *filePath, NEXUS_FILE_INFORMATION_HANDLE *outHandle, char *errorBuffer, nexus_u64 errorBufferSize); /* Open/close an input file as a logical cursor. */
+/* Handles */
+typedef NEXUS_FILE_INFORMATION*       NEXUS_FILE_INFORMATION_HANDLE;
+typedef const NEXUS_FILE_INFORMATION* NEXUS_FILE_INFORMATION_CHANDLE;
+
+NEXUS_BOOL nexus_file_information_open(const char *filePath, NEXUS_FILE_INFORMATION_HANDLE *outHandle, char *errorBuffer, nexus_u64 errorBufferSize);
 void       nexus_file_information_close(NEXUS_FILE_INFORMATION_HANDLE handle);
-NEXUS_BOOL nexus_file_scan(NEXUS_FILE_INFORMATION_HANDLE handle, nexus_u64 byteAmount, void *destination, nexus_u64 destinationSize, nexus_u64 *outBytesRead, char *errorBuffer, nexus_u64 errorBufferSize); /* Non-advancing read (peek) from the current logical index. */
-NEXUS_BOOL nexus_file_consume(NEXUS_FILE_INFORMATION_HANDLE handle, nexus_u64 byteAmount, void *destination, nexus_u64 destinationSize, nexus_u64 *outBytesRead, char *errorBuffer, nexus_u64 errorBufferSize); /* Advancing read (consume) from the current logical index. */
-NEXUS_BOOL nexus_file_scan_at(const char* filePath, nexus_i64 offset, void* dst, size_t n, char* errorBuffer, size_t errorBufferSize); /* Convenience: read exactly n bytes at absolute offset without exposing internals. */
+NEXUS_BOOL nexus_file_reader_peek(NEXUS_FILE_INFORMATION_CHANDLE handle, nexus_u64 byteAmount, void *destination, nexus_u64 destinationSize, nexus_u64 *outBytesRead, char *errorBuffer, nexus_u64 errorBufferSize);
+NEXUS_BOOL nexus_file_reader_consume(NEXUS_FILE_INFORMATION_HANDLE handle, nexus_u64 byteAmount, void *destination, nexus_u64 destinationSize, nexus_u64 *outBytesRead, char *errorBuffer, nexus_u64 errorBufferSize);
+nexus_u64  nexus_file_reader_index_get(NEXUS_FILE_INFORMATION_CHANDLE handle);
 
 double nexus_bytes_byte_to_kilobytes_convert(nexus_u64 bytes);
 double nexus_bytes_byte_to_kilobits_convert(nexus_u64 bytes);
